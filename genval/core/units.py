@@ -10,8 +10,7 @@ which reads ``lo``) — need nothing else.
 ``group`` is an optional namespace: a unit with ``group="K"`` and
 ``id="KC-1"`` writes under ``K/KC-1/`` and its calls are id-stamped
 ``<model>|K|KC-1|<idx>``. This is how a study with experimental conditions
-maps its own grouping onto genval without genval knowing about it
-(docs/DESIGN.md D4).
+maps its own grouping onto genval without genval knowing about it.
 
 Units come from a JSONL file (one object per line: ``id``, optional ``lo``,
 ``exemplars`` (inline questions or ids into ``--exemplar_bank``), ``group``,

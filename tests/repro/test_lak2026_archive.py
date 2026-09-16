@@ -1,7 +1,7 @@
 """Reproduce the LAK 2026 study's CPU stages from its archived outputs.
 
 Every check re-runs migrated code on inputs the study recorded and compares
-with the outputs the study recorded (docs/DESIGN.md, "Feasibility").
+with the outputs the study recorded.
 """
 
 import copy
@@ -168,7 +168,7 @@ def test_build_kc_replays_the_kc_selection_run(lak_archive, tmp_path):
     courses, in the script's course order): the study similarity, affinity
     propagation, the coverage selection drawn from ONE generator shared
     across courses, and the standards-keyed report. Clusters and selected
-    MCQs must be identical for every course (pandas < 3, docs/DESIGN.md D9).
+    MCQs must be identical for every course.
     """
     import glob
 
@@ -193,7 +193,8 @@ def test_build_kc_replays_the_kc_selection_run(lak_archive, tmp_path):
     (pmi_root / "args-concept.json").write_text(json.dumps({"root_dir": str(q_root), "use_gpt_valid": True}))
 
     subprocess.run([sys.executable, str(SCRIPTS / "build_kc.py"), "--std_root", str(std_root),
-                    "--pmi_root", str(pmi_root), "--mcq_per_lo", "6"], check=True, capture_output=True)
+                    "--pmi_root", str(pmi_root), "--mcq_per_lo", "6", "--similarity", "study"],
+                   check=True, capture_output=True)
 
     n_assign = n_sel = 0
     for cur in courses:

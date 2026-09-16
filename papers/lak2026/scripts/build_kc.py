@@ -4,13 +4,13 @@ Study orchestration over the library: for each generated-question directory,
 cluster every LO's validated questions from the run_pmi.py shards, select
 MCQs by KC coverage, and render the standards-keyed report.
 
-The similarity clustered is the study's own (``genval.tasks.select.
-study_similarity``: row-normalized conditionals minus normalized marginals,
-symmetrized), not KCluster's canonical joint-normalized PMI — the two do not
-cluster identically, and the archived ``pmi-kc.csv`` / ``sel-mcq.jsonl`` of
-the study were produced with this one (tests/repro/test_lak2026_archive.py).
-Clustering itself is KCluster's ``tasks.cluster.create_kc`` (affinity
-propagation, median preference, random_state 42, damping search from 0.5).
+``--similarity`` picks the congruity estimator: ``canonical`` (default) is
+KCluster's ``PointwiseMutualInfo`` (joint-normalized, symmetric); ``study``
+is the estimator the LAK 2026 study ran with (``genval.tasks.select.
+study_similarity``), which is what reproduces the study's archived
+``pmi-kc.csv`` / ``sel-mcq.jsonl`` exactly (tests/repro). The two do not
+cluster identically. Clustering itself is KCluster's ``tasks.cluster.create_kc``
+(affinity propagation, median preference, random_state 42, damping search).
 """
 
 import argparse
@@ -22,6 +22,7 @@ from collections import defaultdict
 
 import numpy as np
 import pandas as pd
+from kcluster.core.pmi import PointwiseMutualInfo
 from kcluster.io.jsonl import dump_questions, load_questions
 from kcluster.tasks.cluster import create_kc
 from sklearn.exceptions import ConvergenceWarning
@@ -65,7 +66,12 @@ def main(args):
                 print(f"Ignoring LO '{lo}'; no enough questions")
                 continue
 
-            sim = load_study_similarity(os.path.join(args.pmi_root, curr_dir, lo_idx), len(all_questions[lo]))
+            n = len(all_questions[lo])
+            pmi_dir = os.path.join(args.pmi_root, curr_dir, lo_idx)
+            if args.similarity == "study":
+                sim = load_study_similarity(pmi_dir, n)
+            else:
+                sim = PointwiseMutualInfo.from_shards(pmi_dir, n, n, normalize=True, symmetric=True).pmi_mat
             c_df = concept_df.loc[concept_df["lo"] == lo].reset_index(drop=True)
             kc_df = create_kc(c_df, all_questions[lo], sim)
             if isinstance(kc_df, pd.DataFrame):
@@ -100,5 +106,8 @@ if __name__ == "__main__":
     parser.add_argument("--std_root", required=True, type=str, help="Path to a directory containing standards")
     parser.add_argument("--pmi_root", required=True, type=str, help="Path to a directory containing PMI values")
     parser.add_argument("--mcq_per_lo", default=6, type=int, help="Number of MCQs to be selected for each LO")
+    parser.add_argument("--similarity", default="canonical", choices=("canonical", "study"),
+                        help="Congruity estimator: KCluster's canonical PMI (default) or the study's own "
+                             "(reproduces the LAK 2026 archive)")
 
     main(parser.parse_args())

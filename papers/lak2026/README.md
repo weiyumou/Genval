@@ -7,8 +7,8 @@ in the installable `genval` package (`tasks/generate/phi2.py`,
 `engine/gemini.py`, `output/qualtrics.py`), which builds on the KCluster
 backbone (`kcluster.core.question`, `kcluster.io.jsonl`, `kcluster.core.pmi`,
 `kcluster.engine.local`, `kcluster.tasks.{cluster,concept,congruity}`); this
-directory holds the study-specific orchestration on top of it. Per decision
-D3 in `docs/DESIGN.md` this directory moved here from KCluster together with
+directory holds the study-specific orchestration on top of it. This
+directory moved here from KCluster together with
 the rest of the Phi-2 pipeline, it is the source of truth for the study
 scripts, and the no-data rule applies to it fully.
 
@@ -20,7 +20,7 @@ scripts, and the no-data rule applies to it fully.
 2. **Threshold ablation** — `scripts/ablate.py` sweeps `prob_thd` with a
    cheaper single-ordering confidence check.
 3. **KC selection** — `scripts/run_concept.py` + `scripts/run_pmi.py` score
-   each LO's validated questions, then `scripts/build_kc.py` clusters them
+   each LO's validated questions, then `scripts/build_kc.py --similarity study` clusters them
    (normalized PMI), selects MCQs by KC coverage, and writes the
    standards-keyed report.
 4. **Expert study** — `scripts/build_qualtrics.py` (the `mix_n_match`

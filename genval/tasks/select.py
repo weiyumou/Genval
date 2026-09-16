@@ -14,17 +14,44 @@ import pandas as pd
 from kcluster.core.question import Question
 
 
+def cluster_order(labels: list[str]) -> tuple[list[str], np.ndarray]:
+    """Cluster ids by descending size, ties exactly as the study's
+    ``DataFrame.value_counts("KC-raw", sort=True)`` under pandas 2 ordered
+    them: keys sorted ascending (the groupby behind ``DataFrame.value_counts``),
+    then pandas' descending ``nargsort`` — numpy's quicksort on the reversed
+    counts. Returns (ordered ids, their sizes). numpy only, so the archived
+    selections reproduce under any pandas release (verified on all 413
+    objectives of the LAK 2026 archive)."""
+    keys = sorted(set(labels))
+    index = {k: i for i, k in enumerate(keys)}
+    counts = np.zeros(len(keys), dtype=np.int64)
+    for lab in labels:
+        counts[index[lab]] += 1
+    rev_idx = np.arange(len(keys))[::-1]
+    order = rev_idx[counts[::-1].argsort(kind="quicksort")][::-1]
+    return [keys[i] for i in order], counts[order]
+
+
 def select_mcq(kc: pd.DataFrame, questions: list[Question],
                mcq_per_lo: int = 6, rng: np.random.Generator = None) -> list[Question]:
-    inv_val_counts = kc.value_counts("KC-raw", sort=True).rdiv(1.0)
-    exemplars = [int(x.split("-")[1]) for x in inv_val_counts.index.tolist()]
+    """Every cluster exemplar first (largest clusters first); if fewer than
+    ``mcq_per_lo``, top up by sampling non-exemplars without replacement,
+    weighted by the inverse size of their cluster. The draw is
+    ``rng.choice(n, size, replace=False, p=weights / weights.sum())`` — the
+    study's pandas 2 ``Series.sample`` in numpy terms, so it no longer depends
+    on the pandas release (the LAK 2026 archive test pins it)."""
+    labels = kc["KC-raw"].tolist()
+    ordered, sizes = cluster_order(labels)
+    exemplars = [int(x.split("-")[1]) for x in ordered]
 
     # all exemplars are selected; if not enough, randomly sample others
     if (n := mcq_per_lo - len(exemplars)) > 0:
-        weights = kc["KC-raw"].apply(lambda x: inv_val_counts.loc[x])
-        weights.loc[exemplars] = 0.0
-        smp = kc["KC-raw"].sample(n=n, replace=False, weights=weights, random_state=rng)
-        exemplars.extend(smp.index.tolist())
+        inv_size = {lab: 1.0 / size for lab, size in zip(ordered, sizes)}
+        weights = np.array([inv_size[lab] for lab in labels], dtype=np.float64)
+        weights[exemplars] = 0.0
+        rng = rng if rng is not None else np.random.default_rng()
+        smp = rng.choice(len(labels), size=n, replace=False, p=weights / weights.sum())
+        exemplars.extend(int(i) for i in smp)
 
     return [questions[idx] for idx in exemplars[:mcq_per_lo]]
 

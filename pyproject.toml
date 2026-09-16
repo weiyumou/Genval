@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "genval"
-version = "0.1.0.dev0"
+version = "0.1.0"
 description = "Generate-Then-Validate: LLM question generation and validation from learning objectives"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -27,14 +27,11 @@ classifiers = [
 ]
 # kcluster is the backbone (Question, JSONL I/O, PMI, the local Phi-2 engine,
 # question rendering); it is not on PyPI, so it resolves through
-# [tool.uv.sources] below (pinned git commit, see docs/DESIGN.md D2).
+# [tool.uv.sources] below (pinned git commit).
 dependencies = [
     "kcluster",
     "numpy>=1.26",
-    # <3: pandas 3 changed value_counts tie order and weighted Series.sample
-    # (and raises on some weight vectors), which breaks the LAK 2026 selection
-    # step's exact reproduction — docs/DESIGN.md D9.
-    "pandas>=2.0,<3",
+    "pandas>=2.0",
     "tqdm>=4.66",
 ]
 
@@ -61,7 +58,7 @@ papers = ["seaborn>=0.13", "statsmodels>=0.14", "matplotlib>=3.8"]
 genval = "genval.cli:main"
 
 [project.urls]
-Repository = "https://github.com/weiyumou/genval"
+Repository = "https://github.com/weiyumou/Genval"
 "KCluster (backbone)" = "https://github.com/weiyumou/KCluster"
 
 [tool.uv.sources]

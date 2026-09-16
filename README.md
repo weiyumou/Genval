@@ -24,8 +24,8 @@ information core, the local Phi-2 engine — is [KCluster](https://github.com/we
 Not on PyPI yet — install from source (KCluster resolves from GitHub):
 
 ```bash
-git clone https://github.com/weiyumou/genval
-cd genval
+git clone https://github.com/weiyumou/Genval
+cd Genval
 uv sync --all-extras          # or: pip install -e ".[local,llm]"
 ```
 
@@ -93,7 +93,6 @@ through untouched.
 | `examples/` | synthetic sample data + walkthrough | no |
 | `papers/`   | paper-specific reproduction scripts and analysis (`lak2026/`) | no |
 | `tests/repro/` | archive-backed reproduction tests (skipped without the private archives) | no |
-| `docs/`     | design and decision log, migration notes | no |
 
 ## Reproduction
 
@@ -115,10 +114,16 @@ If you use genval, please cite the LAK 2026 paper ([CITATION.cff](CITATION.cff))
 
 ```bibtex
 @inproceedings{wei2026generate,
-  title     = {Generate-Then-Validate: A Novel Question Generation Approach Using Small Language Models},
   author    = {Wei, Yumou and Stamper, John and Carvalho, Paulo F.},
-  booktitle = {Proceedings of the 16th International Learning Analytics and Knowledge Conference (LAK 2026)},
-  year      = {2026}
+  title     = {Generate-Then-Validate: A Novel Question Generation Approach Using Small Language Models},
+  booktitle = {Proceedings of the LAK26: 16th International Learning Analytics and Knowledge Conference},
+  series    = {LAK '26},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  year      = {2026},
+  pages     = {491--502},
+  doi       = {10.1145/3785022.3785100},
+  url       = {https://doi.org/10.1145/3785022.3785100}
 }
 ```
 

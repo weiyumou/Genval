@@ -1,5 +1,5 @@
 #!/bin/bash
-# Guard: keep data out of the repository history (docs/DESIGN.md, decision D8).
+# Guard: keep data out of the repository history (README, "Data policy").
 # Deliberate, maintainer-approved exception: GENVAL_ALLOW_DATA=1 git commit ...
 [ "$GENVAL_ALLOW_DATA" = "1" ] && exit 0
 
@@ -22,7 +22,7 @@ while IFS= read -r -d '' f; do
 done < <(git diff --cached --name-only --diff-filter=AM -z)
 
 if [ "$fail" -eq 1 ]; then
-    echo "Data must not enter the repository history. See docs/DESIGN.md (D8)." >&2
+    echo "Data must not enter the repository history. See README.md, Data policy." >&2
     echo "For a deliberate, approved exception: GENVAL_ALLOW_DATA=1 git commit ..." >&2
     exit 1
 fi

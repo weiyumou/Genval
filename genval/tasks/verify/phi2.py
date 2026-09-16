@@ -8,7 +8,7 @@ that choice. ``sort_questions`` orders each LO's surviving questions by
 perplexity under their seeding prompt.
 
 The probabilistic part is the LAK 2026 code verbatim; the syntactic block
-that used to be inlined here is the shared filter (docs/DESIGN.md D5) and
+that used to be inlined here is the shared filter and
 is pinned to the study's 6,043 syntactic survivors by the archive check.
 """
 

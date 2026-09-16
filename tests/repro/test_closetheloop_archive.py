@@ -2,7 +2,7 @@
 generator gemini-3.1-pro-preview) through genval's generic units.
 
 The study's groups map onto units by the adapter in :func:`ctl_units`
-(docs/DESIGN.md D4); everything else is genval's own code. Registered
+; everything else is genval's own code. Registered
 prompts, call ids, parsed questions, the V1 filter and the V2' answer
 agreement are compared with what the study recorded.
 """

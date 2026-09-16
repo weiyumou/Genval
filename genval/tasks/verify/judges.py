@@ -8,7 +8,7 @@ the majority vote gives a verdict against the generator's key:
 choice), ``nota``, ``unverified`` (no majority / unparseable), or
 ``incomplete`` (missing calls could still change it).
 
-Two survival rules (docs/DESIGN.md D6):
+Two survival rules:
 
 * ``unanimous`` (default; close-the-loop A11 / ``judge_variant``): every
   judge's majority is the key AND no judge ever votes for a real

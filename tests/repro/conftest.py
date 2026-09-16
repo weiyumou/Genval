@@ -7,7 +7,7 @@ need private archives that never ship with this repository, located by:
 * ``GENVAL_LAK2026_ARCHIVE`` — the legacy Question-Generation repo (the LAK
   2026 study: ``results/{ablation,classify,gemini,qgen,qualtrics}``).
 * ``GENVAL_CTL_ARCHIVE`` — the close-the-loop study repo
-  (``results/qgen-zs/{rounds,screens}/r01``, ``docs/curriculum/``).
+  (``results/qgen-zs/{rounds,screens}/r01`` and its curriculum manifest).
 
 Without them every test here skips, so ``uv run pytest`` stays green on a
 fresh clone and in CI. See repro/README.md.

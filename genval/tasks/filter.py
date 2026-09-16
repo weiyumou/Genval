@@ -1,6 +1,6 @@
 """Syntactic filtering: the rule-based exclusion criteria of LAK 2026 Table 1.
 
-One rule set, two registered profiles (docs/DESIGN.md D5):
+One rule set, two registered profiles:
 
 * :data:`LAK2026` — the Phi-2 study as published: stems under 10 characters,
   empty/duplicate choices, choices under 5 characters, "all/none of the
