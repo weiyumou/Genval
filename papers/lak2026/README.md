@@ -15,7 +15,7 @@ scripts, and the no-data rule applies to it fully.
 ## Pipeline
 
 1. **Generate + validate** — `genval generate` / `genval validate`
-   (CLI; the study ran Phi-2 with `qs_per_std=100`, batched standards, and
+   (CLI; the study ran Phi-2 with `qs_per_std=200`, batched standards, and
    `prob_thd=0.9`).
 2. **Threshold ablation** — `scripts/ablate.py` sweeps `prob_thd` with a
    cheaper single-ordering confidence check.
