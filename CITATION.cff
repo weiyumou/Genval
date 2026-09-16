@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the LAK 2026 paper (see preferred-citation)."
+type: software
+title: "genval"
+authors:
+  - family-names: Wei
+    given-names: Yumou
+    affiliation: Carnegie Mellon University
+license: MIT
+repository-code: "https://github.com/weiyumou/genval"
+preferred-citation:
+  type: conference-paper
+  title: "Generate-Then-Validate: A Novel Question Generation Approach Using Small Language Models"
+  authors:
+    - family-names: Wei
+      given-names: Yumou
+    - family-names: Stamper
+      given-names: John
+    - family-names: Carvalho
+      given-names: Paulo F.
+  collection-title: "Proceedings of the 16th International Learning Analytics and Knowledge Conference (LAK 2026)"
+  year: 2026
