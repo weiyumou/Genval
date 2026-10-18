@@ -122,6 +122,7 @@ def generate_mcq_from_std(llm: LargeLangModel,
                           configs: dict[str, dict] = None, num_choices: int = 4) -> tuple[list[Question], list[str]]:
     if not configs:
         warnings.warn("Given no custom config, default generation config is used")
+        configs = {}
 
     header = prompt_registry.QGEN_MCQ_HEADER.format(num_choices=num_choices)
 

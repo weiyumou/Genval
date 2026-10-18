@@ -12,7 +12,7 @@ torch = pytest.importorskip("torch")
 from kcluster.core.question import Question  # noqa: E402
 from kcluster.io.jsonl import dump_questions, load_questions  # noqa: E402
 
-from genval.tasks.align.phi2 import QuestionLO, classify_from_pmi  # noqa: E402
+from genval.tasks.align.phi2 import QuestionLO, classify_from_pmi, distinct_los  # noqa: E402
 
 LOS = ["Explain how levers work.", "Identify the states of matter."]
 
@@ -30,6 +30,17 @@ def _questions(n=3) -> list[Question]:
         )
         for i in range(n)
     ]
+
+
+def test_distinct_los_keeps_the_order_of_first_appearance():
+    # Eight objectives, each on two questions, in an order that is neither
+    # sorted nor likely to fall out of a set: the order is the contract, since
+    # every GPU rank rebuilds the scoring grid from it
+    order = [5, 2, 7, 0, 3, 6, 1, 4]
+    questions = _questions(16)
+    for i, q in enumerate(questions):
+        q["lo"] = f"objective {order[i % 8]}"
+    assert distinct_los(questions) == [f"objective {k}" for k in order]
 
 
 def test_question_lo_actions_grid():

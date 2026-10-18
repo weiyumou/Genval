@@ -19,7 +19,7 @@ from transformers.utils import logging
 
 from genval.core.units import load_units
 from genval.paths import default_output_dir, prepare_output_dir, step_dir
-from genval.tasks.align.phi2 import classify_from_pmi, save_relevance, score_grid
+from genval.tasks.align.phi2 import classify_from_pmi, distinct_los, save_relevance, score_grid
 
 
 def read_los(path: str) -> list[str]:
@@ -60,7 +60,7 @@ def main(args):
 
     # Read all questions and collect their LOs
     all_questions = load_questions(data_path)
-    all_los = read_los(args.los_path) if getattr(args, "los_path", None) else list(set(q["lo"] for q in all_questions))
+    all_los = read_los(args.los_path) if getattr(args, "los_path", None) else distinct_los(all_questions)
 
     fname = os.path.splitext(os.path.basename(data_path))[0]
     is_zero = score_grid(all_questions, all_los, args.lo_type, args.llm_path, args.output_dir,
