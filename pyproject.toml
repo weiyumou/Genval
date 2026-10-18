@@ -63,7 +63,7 @@ Repository = "https://github.com/weiyumou/Genval"
 "KCluster (backbone)" = "https://github.com/weiyumou/KCluster"
 
 [tool.uv.sources]
-kcluster = { git = "https://github.com/weiyumou/KCluster", rev = "20aaa968e0dbc41721365087a80fd4b71e8b5320" }
+kcluster = { git = "https://github.com/weiyumou/KCluster", rev = "414fd422417f45f2385c2119e71c3d92e438e5ea" }
 
 [tool.setuptools.packages.find]
 include = ["genval*"]
