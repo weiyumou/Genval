@@ -13,10 +13,10 @@ import time
 
 import pandas as pd
 from kcluster.core.question import Question
+from kcluster.engine.gemini import GeminiEngine, parse_text_choices, save_json_responses
 from kcluster.io.jsonl import load_questions
 
 from genval.core.prompts import JUDGE_Q1_SINGLE, JUDGE_Q2_TEXT
-from genval.engine.gemini import GeminiEngine, parse_text_choices, save_json_responses
 
 CONFIG = {
     "seed": 42,

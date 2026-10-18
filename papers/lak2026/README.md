@@ -4,9 +4,9 @@ Reproduction scripts for the LAK 2026 paper on generating and validating
 multiple-choice questions from course standards. The algorithmic core lives
 in the installable `genval` package (`tasks/generate/phi2.py`,
 `tasks/verify/phi2.py`, `tasks/select.py`, `tasks/align/phi2.py`,
-`engine/gemini.py`, `output/qualtrics.py`), which builds on the KCluster
+`output/qualtrics.py`), which builds on the KCluster
 backbone (`kcluster.core.question`, `kcluster.io.jsonl`, `kcluster.core.pmi`,
-`kcluster.engine.local`, `kcluster.tasks.{cluster,concept,congruity}`); this
+`kcluster.engine.{local,gemini}`, `kcluster.tasks.{cluster,concept,congruity}`); this
 directory holds the study-specific orchestration on top of it. This
 directory moved here from KCluster together with
 the rest of the Phi-2 pipeline, it is the source of truth for the study

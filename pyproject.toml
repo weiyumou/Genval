@@ -38,8 +38,9 @@ dependencies = [
 [project.optional-dependencies]
 # Phi-2 stages (generate / validate / classify) on a local GPU
 local = ["kcluster[local]"]
-# Gemini as generator or judge (Developer API or Vertex AI)
-gemini = ["google-genai>=1.0"]
+# Gemini as generator or judge (Developer API or Vertex AI); the engine
+# itself is KCluster's
+gemini = ["kcluster[gemini]"]
 # Claude as generator or judge (Vertex AI, Bedrock, or the direct API)
 claude = ["anthropic[bedrock,vertex]>=0.122.0"]
 # both LLM engines

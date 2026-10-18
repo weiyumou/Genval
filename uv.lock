@@ -935,11 +935,11 @@ claude = [
     { name = "anthropic", extra = ["bedrock", "vertex"] },
 ]
 gemini = [
-    { name = "google-genai" },
+    { name = "kcluster", extra = ["gemini"] },
 ]
 llm = [
     { name = "anthropic", extra = ["bedrock", "vertex"] },
-    { name = "google-genai" },
+    { name = "kcluster", extra = ["gemini"] },
 ]
 local = [
     { name = "kcluster", extra = ["local"] },
@@ -963,8 +963,8 @@ papers = [
 requires-dist = [
     { name = "anthropic", extras = ["bedrock", "vertex"], marker = "extra == 'claude'", specifier = ">=0.122.0" },
     { name = "genval", extras = ["gemini", "claude"], marker = "extra == 'llm'" },
-    { name = "google-genai", marker = "extra == 'gemini'", specifier = ">=1.0" },
     { name = "kcluster", git = "https://github.com/weiyumou/KCluster?rev=20aaa968e0dbc41721365087a80fd4b71e8b5320" },
+    { name = "kcluster", extras = ["gemini"], marker = "extra == 'gemini'", git = "https://github.com/weiyumou/KCluster?rev=20aaa968e0dbc41721365087a80fd4b71e8b5320" },
     { name = "kcluster", extras = ["local"], marker = "extra == 'local'", git = "https://github.com/weiyumou/KCluster?rev=20aaa968e0dbc41721365087a80fd4b71e8b5320" },
     { name = "numpy", specifier = ">=1.26" },
     { name = "pandas", specifier = ">=2.0" },
@@ -1313,6 +1313,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+gemini = [
+    { name = "google-genai" },
+]
 local = [
     { name = "accelerate" },
     { name = "lightning" },
